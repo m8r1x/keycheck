@@ -1,6 +1,6 @@
 import test from 'ava';
 
-import { haskey } from '../';
+import haskey from '../';
 
 test('haskey: should return { pass: true, missing: [] }', t => {
   const { pass, missing } = haskey({ a: 1, b: 2, c: 3 }, ['a', 'b', 'c']);

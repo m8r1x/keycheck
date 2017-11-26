@@ -5,7 +5,7 @@
  * @param {Object} o - Object to assert
  * @return {boolean}
  */
-exports.isObject = o => !!o && o.constructor === Object;
+const isObject = o => !!o && o.constructor === Object;
 
 /**
  * Checks for the existence of specified keys in object
@@ -14,8 +14,8 @@ exports.isObject = o => !!o && o.constructor === Object;
  * @param {array|string} keys - array or string of keys to search for
  * @return {Object} { pass: boolean, missing: [ missing, keys ] }
 */
-exports.haskey = (object, keys) => {
-  if (!this.isObject(object)) {
+module.exports = (object, keys) => {
+  if (!isObject(object)) {
     throw new TypeError('invalid object');
   }
   if(!(typeof keys === 'string' || Array.isArray(keys))) {
