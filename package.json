@@ -1,0 +1,17 @@
+{
+  "name": "haskey",
+  "version": "0.1.0",
+  "description": "Checks for existence of keys in object",
+  "keywords": ["utility", "util", "object", "keys"],
+  "main": "index.js",
+  "repository": "https://github.com/m8r1x/node-haskey",
+  "author": "m8r1x <m8r1x.io@gmail.com>",
+  "license": "MIT",
+  "private": false,
+  "scripts": {
+    "test": "ava -v"
+  },
+  "devDependencies": {
+    "ava": "^0.23.0"
+  }
+}
