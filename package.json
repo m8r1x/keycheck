@@ -1,6 +1,6 @@
 {
   "name": "haskey",
-  "version": "0.1.2",
+  "version": "0.1.3",
   "description": "Checks for existence of keys in object",
   "keywords": ["utility", "util", "object", "keys"],
   "main": "index.js",

@@ -12,29 +12,38 @@ const user = {
   name: 'willie',
   last: 'm.i.k.'
 };
-const { pass, missing } = haskey(user, ['name', 'last']);
+
+const { pass, missing } = haskey(user)(['name', 'last']);
 
 // pass : true
 // missing: []
 ```
 you may also use `comma separated keys`
 ```javascript
-const { pass, missing } = haskey(user, 'name, last');
+const { pass, missing } = haskey(user)('name, last');
 ```
 or `whitespaced separated keys`
 ```javascript
-const { pass, missing } = haskey(user, 'name last');
+const { pass, missing } = haskey(user)('name last');
 ```
+or `both`
+```javascript
+const { pass, missing } = haskey(user)('name,last email');
+```
+
 ## Common Usage Example
 ```javascript
 
 const otherUser = {
   _id: 1
 };
-const { pass, missing } = haskey(otherUser, 'name email last')
+
+const { pass, missing } = haskey(otherUser)('name email last')
+
 if (!pass) {
   throw new Error(`user object missing: ${missing} keys`)
 }
+
 // pass: false
 // missing: ['name', 'email', 'last']
 // Error: user object missing name,email,last keys
