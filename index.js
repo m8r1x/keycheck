@@ -1,4 +1,4 @@
-'use strict';
+"use strict";
 /**
  * Assert the input is a javascript object i.e. {}
  *
@@ -16,26 +16,26 @@ const isObject = o => !!o && o.constructor === Object;
  */
 module.exports = object => keys => {
   if (!isObject(object)) {
-    throw new TypeError('invalid object');
+    throw new TypeError("invalid object");
   }
-  if (!(typeof keys === 'string' || Array.isArray(keys))) {
-    throw new TypeError('keys must be a string or array of strings');
+  if (!(typeof keys === "string" || Array.isArray(keys))) {
+    throw new TypeError("keys must be a string or array of strings");
   }
-  keys =
-    typeof keys === 'string'
+  let _keys =
+    typeof keys === "string"
       ? keys
-          .split(' ')
+          .split(" ")
           .join()
-          .split(',')
-          .filter(key => key !== '')
+          .split(",")
+          .filter(key => key !== "")
       : keys;
   const results = { pass: false, missing: [] };
   const has = Object.prototype.hasOwnProperty;
-  results.pass = keys
+  results.pass = _keys
     .map(key => has.call(object, key))
     .reduce((next, previous, index) => {
       if (!previous) {
-        results.missing.push(keys[index]);
+        results.missing.push(_keys[index]);
       }
       return next && previous;
     }, true);
