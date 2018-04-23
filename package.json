@@ -4,6 +4,7 @@
   "description": "Checks for existence of keys in object",
   "keywords": ["utility", "util", "object", "keys"],
   "main": "index.js",
+  "typings": "index.d.ts",
   "repository": "https://github.com/m8r1x/node-haskey",
   "author": "m8r1x <m8r1x.io@gmail.com>",
   "license": "MIT",
