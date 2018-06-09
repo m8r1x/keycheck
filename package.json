@@ -1,11 +1,24 @@
 {
-  "name": "haskey",
-  "version": "0.1.4",
+  "name": "keycheck",
+  "version": "0.0.1",
   "description": "Checks for existence of keys in object",
-  "keywords": ["utility", "util", "object", "keys"],
+  "keywords": [
+    "utility",
+    "util",
+    "object",
+    "keys",
+    "key",
+    "check"
+  ],
   "main": "index.js",
   "typings": "index.d.ts",
-  "repository": "https://github.com/m8r1x/node-haskey",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/m8r1x/keycheck"
+  },
+  "bugs": {
+    "url": "https://github.com/m8r1x/keycheck"
+  },
   "author": "m8r1x <m8r1x.io@gmail.com>",
   "license": "MIT",
   "private": false,
