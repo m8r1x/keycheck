@@ -14,7 +14,7 @@ exports.default = module.exports = function keycheck(object, keys) {
     throw new TypeError("Keys must be a string or array of strings!");
   }
   if (typeof keys === "string") {
-    keys = keys.match(/[A-Za-z0-9]+((-|_)[A-Za-z0-9]+)?/g);
+    keys = keys.match(/\w+((-|_)\w+)?/g);
   }
   return keys.reduce((keyBoolMap, currentKey) => {
     keyBoolMap[currentKey] = Object.prototype.hasOwnProperty.call(object, currentKey)
