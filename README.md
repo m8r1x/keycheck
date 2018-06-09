@@ -1,57 +1,41 @@
-## haskey
+## keycheck
 Checks for the existence of specified keys in an object
 
 ## Installation
 ```bash
-$ npm install haskey
+$ npm install keycheck
 ```
 
-## Basic Usage
+## Usage
 ```javascript
+const keycheck = require("keycheck");
+// ts: import * as keycheck from "keycheck";
+
 const user = {
-  name: 'willie',
-  last: 'm.i.k.'
+  firstName: "willie",
+  lastName: "m.i.k."
 };
 
-const { pass, missing } = haskey(user)(['name', 'last']);
+const keys = ["firstName", "lastName", "age"]; // or "firstName lastName age"
+const result = keycheck(user, keys);
 
-// pass : true
-// missing: []
-```
-you may also use `comma separated keys`
-```javascript
-const { pass, missing } = haskey(user)('name, last');
-```
-or `whitespaced separated keys`
-```javascript
-const { pass, missing } = haskey(user)('name last');
-```
-or `both`
-```javascript
-const { pass, missing } = haskey(user)('name,last email');
+// { firstName: true, lastName: true, age: false }
 ```
 
-## Common Usage Example
-```javascript
+## API
 
-const otherUser = {
-  _id: 1
-};
+### `keycheck(object, keys)`
 
-const { pass, missing } = haskey(otherUser)('name email last')
+  | Param | Description |
+  | ----- | :--------- |
+  | object | valid JSON object |
+  | keys   | delimited string or array of strings |
 
-if (!pass) {
-  throw new Error(`user object missing: ${missing} keys`)
-}
-
-// pass: false
-// missing: ['name', 'email', 'last']
-// Error: user object missing name,email,last keys
-```
+**NOTE**: Any character can be used as a delimiter except `-` and `_`.
 
 ## License
 [MIT]
 
 **Free software, Hell Yeah**
 
-[MIT]: <https://opensource.org/licenses/MIT>
+[MIT]: https://opensource.org/licenses/MIT

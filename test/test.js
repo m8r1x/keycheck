@@ -1,63 +1,38 @@
 import test from 'ava';
 
-import haskey from '../';
+import keycheck from '../';
 
-test('haskey: should return { pass: true, missing: [] }', t => {
-  const { pass, missing } = haskey({ a: 1, b: 2, c: 3 })(['a', 'b', 'c']);
-  t.true(pass);
-  t.is(missing.length, 0);
+test('it should return the expected result regardless of typos', t => {
+  const expectedResult = { a: true, b: false };
+  t.deepEqual(keycheck({ a: 1 }, "a b"), expectedResult);
+  t.deepEqual(keycheck({ a: 1, c: 3 }, "a,b"), expectedResult);
+  t.deepEqual(keycheck({ a: 1, d: ""}, "a    b"), expectedResult);
+  t.deepEqual(keycheck({ a: 1 , m: "n"}, "a,      b"), expectedResult);
+  t.deepEqual(keycheck({ a: 1, "c":"C" }, "a  ,      b"), expectedResult);
+  t.deepEqual(keycheck({ a: 1, y: false }, "a  ,  ,    b"), expectedResult);
 });
 
-test('haskey: should return missing keys given an array', t => {
-  const { pass, missing } = haskey({ a: 1, b: 2, c: 3 })(['a', 'b', 'c', 'd']);
-  const [key] = missing;
-  t.false(pass);
-  t.is(key, 'd');
+test('it should delimit using any character except `-` and `_`', t => {
+  const expectedResult = { a: true, "b-c": false, "d_e": true };
+  t.deepEqual(keycheck({ a: 1, "d_e": 3 }, "a%d_e & b-c"), expectedResult);
+  t.deepEqual(keycheck({ a: 1, "d_e": "" }, "a b-c,d_e"), expectedResult);
+  t.deepEqual(keycheck({ a: 1, "d_e": 3 }, "a,b-c     d_e"), expectedResult);
 });
 
-test('haskey: should return { pass: true, missing: [] } given comma separated keys', t => {
-  const { pass, missing } = haskey({ a: 1, b: 2, c: 3 })('a, b, c');
-  t.true(pass);
-  t.is(missing.length, 0);
+test('it should throw on invalid JSON object', t => {
+  const error1 = t.throws(() => { keycheck([], "a  ,  ,    b") }, TypeError);
+  const error2 = t.throws(() => { keycheck(1, "a  ,  ,    b") }, TypeError);
+  const error3 = t.throws(() => { keycheck(() => {}, "a  ,  ,    b") }, TypeError);
+  t.deepEqual(error1, error2);
+  t.deepEqual(error2, error3);
+  t.is(error3.message, "Invalid JSON object!");
 });
 
-test('haskey: should return missing keys given comma separated keys', t => {
-  const { pass, missing } = haskey({ a: 1, b: 2, c: 3 })('f, a, b, c');
-  const [key] = missing;
-  t.false(pass);
-  t.is(key, 'f');
-});
-
-test('haskey: should return { pass: true, missing: [] } given string of whitespaced keys', t => {
-  const { pass, missing } = haskey({ a: 1, b: 2, c: 3 })('a b c');
-  t.true(pass);
-  t.is(missing.length, 0);
-});
-
-test('haskey: should return missing keys given string of whitespaced keys', t => {
-  const { pass, missing } = haskey({ a: 1, b: 2, c: 3 })('a b c d');
-  const [key] = missing;
-  t.false(pass);
-  t.is(key, 'd');
-});
-
-test('haskey: should throw TypeError when keys param is object', t => {
-  const error = t.throws(() => {
-    haskey({ a: 1, b: 2 })({}), TypeError;
-  });
-  t.is(error.message, 'keys must be a string or array of strings');
-});
-
-test('haskey: should throw TypeError when keys param is number', t => {
-  const error = t.throws(() => {
-    haskey({ a: 1, b: 2 })(1), TypeError;
-  });
-  t.is(error.message, 'keys must be a string or array of strings');
-});
-
-test('haskey: should throw TypeError when given invalid js object', t => {
-  const error = t.throws(() => {
-    haskey([])('a b c'), TypeError;
-  });
-  t.is(error.message, 'invalid object');
+test('it should throw on invalid keys param', t => {
+  const error1 = t.throws(() => { keycheck({}, {}) }, TypeError);
+  const error2 = t.throws(() => { keycheck({}, () => {}) }, TypeError);
+  const error3 = t.throws(() => { keycheck({}, 1) }, TypeError);
+  t.deepEqual(error1, error2);
+  t.deepEqual(error2, error3);
+  t.is(error3.message, "Keys must be a string or array of strings!");
 });

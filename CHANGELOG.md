@@ -1,4 +1,4 @@
 # Changelog
 
-### 0.1.0 (Nov 26, 2017)
+### 0.0.1 (June 9, 2018)
 Initial release
